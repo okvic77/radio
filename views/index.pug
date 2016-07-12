@@ -16,7 +16,7 @@ html(lang="en")
       const Stream = React.createClass({
         render() {
           return (<div>
-            Hola
+            <h2>/stream/{this.props.stream}</h2>
               <audio controls src={`/stream/${this.props.stream}`}></audio>
             </div>)
         }
