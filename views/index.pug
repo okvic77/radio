@@ -1,0 +1,46 @@
+doctype html
+html(lang="en")
+  head
+    title Ok
+  script(src="/socket.io/socket.io.js")
+
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js")
+  body
+    #list
+    script(type="text/babel").
+      var socket = io.connect();
+  
+      
+      const Stream = React.createClass({
+        render() {
+          return (<div>
+            Hola
+              <audio controls src={`/stream/${this.props.stream}`}></audio>
+            </div>)
+        }
+      });
+      
+      const App = React.createClass({
+        
+        getInitialState() {
+          return {
+            streams: !{JSON.stringify(Object.keys(streams))} 
+          };
+        },
+        
+        componentWillMount() {
+          socket.on('source', streams => {
+            this.setState({streams});
+          });
+        },
+        
+        render() {
+          return <div>Lista
+          {this.state.streams.map(stream => <Stream key={stream} stream={stream} />)}
+          </div>
+        }
+      });
+      
+      ReactDOM.render(<App />, document.getElementById('list'));
