@@ -52,7 +52,9 @@ net.createServer(conn => {
             // var meta = ['-metadata', 'author="FFmpeg Bayou Jug Band"']
             // meta.push('-metadata', 'title="Decode my Heart (Lets Mux)"')
 
-            const ls = spawn('ffmpeg', ['-i', 'pipe:0', ...outOptions.split(' '), '-hide_banner', `pipe:1`]);
+            const adv = []; // '-hide_banner'
+
+            const ls = spawn('ffmpeg', ['-i', 'pipe:0', ...outOptions.split(' '), ...adv, `pipe:1`]);
 
             // ls.stdout.pipe(fs.createWriteStream(`files-${name}-${Date.now()}.mp3`))
             streams.add(name, ls.stdout)
@@ -81,4 +83,4 @@ net.createServer(conn => {
             conn.emit('data', data)
         }
     })
-}).listen(3000);
+}).listen(process.env.PORT || 3000);
